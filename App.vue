@@ -1,5 +1,6 @@
 <template>
   <div id="Actividad_Main">
+     <!-- <tmp/> -->
     <div
       class="pantalla"
       id="pantallaActividad"
@@ -11,13 +12,13 @@
       </div>
 
       <div  v-if="this.mostrar==1">
-        <nivel1 @respuestasalumno="respuestasdadas"></nivel1>     
+        <nivel1 @respuestasalumno="respuestasdadas" @tiemporespuestas="respuestatiempo"></nivel1>     
       </div>
       <div  v-if="this.mostrar==2">
         <nivel2 @respuestasalumno="respuestasdadas" @tiemporespuestas="respuestatiempo"></nivel2>    
       </div>
       <div  v-if="this.mostrar==3">
-        <nivel3 @respuestasalumno="respuestasdadas" @tiemporespuestas="respuestatiempo"></nivel3>   
+        <nivel3 @respuestasalumno="respuestasdadas" @tiemporespuestas="respuestatiempo" v-bind:eleccion_plantilla="plantilla_actual"></nivel3>   
       </div>
       
     </div>
@@ -31,23 +32,25 @@
 import nivel1 from '@/components/N1.vue'
 import nivel2 from '@/components/N2.vue'
 import nivel3 from '@/components/N3.vue'
+// import tmp from '@/components/Progress.vue'
 
 export default {
   name: "App",
   components: {
     nivel1,
     nivel2,
-    nivel3
+    nivel3,
+    // tmp
   },
   data: function () {
     return {
       mostrar:0,
       falso:false,
-       valorparar:null,
+      valorparar:null,
       tiempo_mm: 1000/90000,
-       llenado_bar:0,
-       milisegundos:0,
-       segundos:0,
+      llenado_bar:0,
+      milisegundos:0,
+      segundos:0,
       /**
        * La plantilla con la que inicial el ejercicio.
        * Almacenar en la instancia para evitar que se modifique durante la ejecucion.
@@ -119,22 +122,22 @@ export default {
   methods: {
     respuestatiempo(valor){
 if(valor){
-    document.getElementById('bt').style.display='block'
-  this.iniciandoT()
+  document.getElementById('bt').style.display='block';
+  this.iniciandoT();
 }else{
-  this.parar_tiempo()
+  this.parar_tiempo();
 }
     },
 
     respuestasdadas(valor){
       
       if(valor){
-      this. iteracion_config.juego_respuestas_correctas=1;
-      this. iteracion_config.juego_respuestas_incorrectas=0;
+      this.iteracion_config.juego_respuestas_correctas+=1;
+      this.iteracion_config.juego_respuestas_incorrectas+=0;
       document.getElementById("pantallaActividad").style.backgroundColor='#3FE495CC';
       }else{
-      this. iteracion_config.juego_respuestas_correctas=0;
-      this. iteracion_config.juego_respuestas_incorrectas=1;
+      this.iteracion_config.juego_respuestas_correctas+=0;
+      this.iteracion_config.juego_respuestas_incorrectas+=1;
       document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
       }
        console.log("gane o perdi:"+valor);
@@ -217,17 +220,17 @@ if(valor){
       );
     },
     inicando(plantillaver){
-     this.llenado_bar=0
-       this.milisegundos=0
-       this.segundos=0
+     this.llenado_bar=0;
+       this.milisegundos=0;
+       this.segundos=0;
     if(plantillaver=="preTrazosFormaFigura1"){
-    this.mostrar=1   
+    this.mostrar=1;   
     }
     if(plantillaver=="preTrazosFormaFigura2"){
-    this.mostrar=2   
+    this.mostrar=3;   
     }
     if(plantillaver=="preTrazosFormaFigura3"){
-    this.mostrar=3   
+    this.mostrar=3;   
     }
 
     },
@@ -238,7 +241,7 @@ if(valor){
     },
     iniciar_tiempo(){
     
-   this.milisegundos++;
+    this.milisegundos++;
 
   //  console.log(this.llenado_bar);
       if(this.milisegundos==100){
@@ -247,8 +250,8 @@ if(valor){
       // console.log(this.segundos)
     }
     if(this.segundos===91){
-        this.parar_tiempo()
-        this.respuestasdadas(false)
+        this.parar_tiempo();
+        this.respuestasdadas(false);
          document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
 
     } 

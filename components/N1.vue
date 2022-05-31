@@ -5,40 +5,39 @@
      </div>      
     </div>
 
-    <div id="pantalla2" class= "pretrazos3_responder" style="display:none;" >
-      <div class="tiempo_bar">
-        <div class="progress progresotime">
-          <div class="progress-bar" role="progressbar" v-bind:style="'width:'+llenado_bar+'%'" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-      </div>
-
+    <div id="pantalla2" class= "pretrazos3_responder">
       <div class="pretrazos3_responder-imagen">
         <div v-bind:class="cargar_fig_geometrica.tipofigura+'A'"></div>
       </div>
 
       <div class="pretrazos3_responder-opciones">
-       
-        <div class="opcion1" v-for="opciones in objcontenido.puntos" :key="opciones.length">
-           <svg  class="figura1"  width="250px" height="200px">
-             
-            <path v-if="opciones.figop=='triangulo'" id="trazadoT" d="M35 169 L 135 20 L 228 169 H 35Z" fill="#EFF3FB" stroke="#858F98" stroke-width="5" stroke-dasharray="12 12"/>
-            <rect v-if="opciones.figop=='cuadrado'" id="trazadoC" x="36" y="16" width="175" height="168" fill="#EFF3FB" stroke="#858F98" stroke-width="5" stroke-dasharray="12 12"/>
-            <!-- <circle v-if="opciones.figop=='circulo'" id="trazadoCI" cx="127" cy="100" r="85" fill="#EFF3FB" stroke="#858F98" stroke-width="5" stroke-dasharray="12 12"/> -->
-       
-            <path v-if="opciones.figop=='circulo'" style="stroke: #858F98;stroke-width:5; fill: #EFF3FB; stroke-dasharray:12 12;" d="m43,100 a85,85 0 1, 0 0,-1 z"></path>
-             
-             <circle v-if="opciones.figop=='circulo'" id="indicador" display="none" r="10" style="fill: #ff0000;">								
-             <animateMotion path="m210,100 a85,85 0 1, 1 0,-1 z" dur="10s" rotate="auto" repeatCount="indefinite" ></animateMotion>
-             </circle> 
+       <div class="opcion1">
+         <svg  width="250px" height="200px" class="figura1">
+           <rect  v-bind:id="cargar_fig_geometrica.tipofigura" x="36" y="16" width="175" height="168" fill="#EFF3FB" stroke="#858F98" stroke-width="5" stroke-dasharray="12 12"/>
+           <image v-if="cargar_fig_geometrica.puntos[0].img=='rectan'" style="display:none;" id="iz" xlink:href="@/assets/down.png"  width="20" height="20" v-bind:x="objcontenido.puntos[0].x-30" v-bind:y="objcontenido.puntos[0].y"/>
+           <circle display="none" id="pinicio" v-bind:cx="objcontenido.puntos[0].x" v-bind:cy="objcontenido.puntos[0].y" r="10" stroke="black" stroke-width="3" fill="black" />
+         </svg>
+         <canvas ref="canvascuadrado" v-if="this.objcontenido.puntos[0].figop=='cuadrado'"  v-bind:id="this.objcontenido.puntos[0].figop" class="cva" width="250px" height="200px" v-hammer:panstart="captureOn" v-hammer:pan="mo" v-hammer:panend="captureOff"></canvas>
+       </div>
 
-            <circle v-bind:cx="opciones.x" v-bind:cy="opciones.y" r="10" stroke="black" stroke-width="3" fill="black" /> 
-            <circle v-bind:cx="opciones.x" v-bind:cy="opciones.y" r="10" stroke="blue" stroke-width="3" fill="black" /> 
-          
-          </svg> 
-         <canvas  v-if="opciones.figop=='triangulo'" v-bind:id="opciones.figop" class="cva" width="250px" height="200px" v-hammer:panstart="captureOn" v-hammer:pan="mo" v-hammer:panend="captureOff"></canvas>  
-         <canvas  v-if="opciones.figop=='cuadrado'"  v-bind:id="opciones.figop" class="cva" width="250px" height="200px" v-hammer:panstart="captureOn" v-hammer:pan="mo" v-hammer:panend="captureOff"></canvas>
-         <canvas  v-if="opciones.figop=='circulo'"   v-bind:id="opciones.figop" class="cva" width="250px" height="200px" v-hammer:panstart="captureOn" v-hammer:pan="mo" v-hammer:panend="captureOff"></canvas> 
-        </div> 
+       <div class="opcion1">
+         <svg  width="250px" height="200px" class="figura1">
+            <path  v-bind:id="cargar_fig_geometrica.tipofigura" d="M35 169 L 135 20 L 228 169 H 35Z" fill="#EFF3FB" stroke="#858F98" stroke-width="5" stroke-dasharray="12 12"/>
+           <!-- <rect v-if="cargar_fig_geometrica.tipofigura=='cuadrado'" v-bind:id="cargar_fig_geometrica.tipofigura" x="36" y="16" width="175" height="168" fill="#EFF3FB" stroke="#858F98" stroke-width="5" stroke-dasharray="12 12"/> -->
+           <image v-if="cargar_fig_geometrica.puntos[1].img=='poligonos'" style="display:none;" id="izB" xlink:href="@/assets/downi.png"  width="20" height="20" v-bind:x="objcontenido.puntos[1].x-30" v-bind:y="objcontenido.puntos[1].y-20"/>
+           <circle display="none" id="pinicioB" v-bind:cx="objcontenido.puntos[1].x" v-bind:cy="objcontenido.puntos[1].y" r="10" stroke="black" stroke-width="3" fill="black" />
+         </svg>
+         <canvas ref="canvastriangulo" v-if="this.objcontenido.puntos[1].figop=='triangulo'"  v-bind:id="this.objcontenido.puntos[1].figop" class="cva" width="250px" height="200px" v-hammer:panstart="captureOn" v-hammer:pan="mo" v-hammer:panend="captureOff"></canvas>
+       </div>
+       
+       <div class="opcion1">
+         <svg  width="250px" height="200px" class="figura1">
+           <path  v-bind:id="cargar_fig_geometrica.tipofigura" style="stroke: #858F98;stroke-width:5; fill: #EFF3FB; stroke-dasharray:12 12;" d="m43,100 a85,85 0 1, 0 0,-1 z"></path>
+           <image v-if="cargar_fig_geometrica.puntos[2].img=='poligonos'" style="display:none;" id="izC" xlink:href="@/assets/downi.png"  width="20" height="20" v-bind:x="objcontenido.puntos[2].x-30" v-bind:y="objcontenido.puntos[2].y-4"/>
+           <circle display="none" id="pinicioC" v-bind:cx="objcontenido.puntos[2].x" v-bind:cy="objcontenido.puntos[2].y" r="10" stroke="black" stroke-width="3" fill="black" />
+         </svg>
+         <canvas ref="canvascirculo" v-if="this.objcontenido.puntos[2].figop=='circulo'" v-on:click="validar_post_trazo('circulo')"   v-bind:id="this.objcontenido.puntos[2].figop" class="cva" width="250px" height="200px" v-hammer:panstart="captureOn" v-hammer:pan="mo" v-hammer:panend="captureOff"></canvas>
+       </div>
       </div>
     </div> 
   </div>
@@ -61,7 +60,10 @@ export default {
       mostrar:true,
       myElement:"",
       canvas:null,
+      canvasB:null,
+      canvasC:null,
       context:null,
+      contextB:null,
       isDrawing:false,
       
       
@@ -99,6 +101,9 @@ export default {
       llenado_bar:0,
       milisegundos:0,
       segundos:0,
+      ordenvisitado:[],
+      mostrar_pasos_T:null,
+      paso_mostrar:0
       
     }
   },
@@ -114,21 +119,25 @@ export default {
   
   },
   mounted(){
+     
      this.cargar_figura();
    },
    methods:{
   
-     obtenercontenido(){
-        var random_llena= Math.ceil(Math.random()*3);
-          // var random_llena= 3; 
-          if(random_llena==1){  
+    obtenercontenido(){
+        // var random_llena= Math.ceil(Math.random()*3);
+        var random_llena= 1; 
+        if(random_llena==1){  
             this.objcontenido={
             tipofigura:"cuadrado",
-            direccion:"panright",
+            direccion:"pandown",
             inicio:[{x:36,y:16}],
             final:[{x:36,y:16}],
-            puntos:[{figop:"cuadrado",direccion:"pandown",x:36,y:16},{figop:"triangulo",direccion:"panright",x:138,y:20},{figop:"circulo",direccion:"panleft",x:127,y:12}],
-            rutacorrecta:[{x:36,y:16},{x:208,y:16},{x:208,y:182},{x:36,y:182},{x:36,y:16}],
+            pociciones:[{xp:36,yp:184,L:"1"},
+                        {xp:209,yp:184,L:"2"},
+                        {xp:209,yp:16,L:"3"},
+                        {xp:60,yp:16,L:"4"}],
+            puntos:[{figop:"cuadrado",direccion:"pandown",x:36,y:16,img:"rectan"},{figop:"triangulo",direccion:"panright",x:138,y:20,img:"poligonos"},{figop:"circulo",direccion:"panleft",x:127,y:12,img:"poligonos"}]
           }
         }
         if(random_llena==2){  
@@ -137,8 +146,10 @@ export default {
             direccion:"panright",
             inicio:[{x:138,y:20}],
             final:[{x:138,y:20}],
-            puntos:[{figop:"circulo",direccion:"panright",x:127,y:11},{figop:"cuadrado",direccion:"panright",x:36,y:16},{figop:"triangulo",direccion:"panright",x:138,y:20}],
-            rutacorrecta:[{x:138,y:20},{x:225,y:300}],
+            pociciones:[{xp:35,yp:168,L:"1"},
+                        {xp:221,yp:168,L:"2"},
+                        {xp:150,yp:40,L:"3"}],
+            puntos:[{figop:"cuadrado",direccion:"pandown",x:36,y:16,img:"rectan"},{figop:"triangulo",direccion:"panright",x:138,y:20,img:"poligonos"},{figop:"circulo",direccion:"panleft",x:127,y:12,img:"poligonos"}]
           }
         }
         if(random_llena==3){  
@@ -147,8 +158,9 @@ export default {
             inicio:[{x:127,y:11}],
             final:[{x:127,y:11}],
             direccion:"panright",
-            puntos:[{figop:"circulo",direccion:"panright",x:127,y:11},{figop:"cuadrado",direccion:"panright",x:36,y:16},{figop:"triangulo",direccion:"panleft",x:138,y:20}],
-            rutacorrecta:[{x:36,y:16},{x:208,y:16},{x:208,y:182},{x:36,y:182},{x:36,y:16}],
+            pociciones:[{xp:130,yp:185,L:"1"},
+                        {xp:163,yp:24,L:"2"}],
+            puntos:[{figop:"cuadrado",direccion:"pandown",x:36,y:16,img:"rectan"},{figop:"triangulo",direccion:"panright",x:138,y:20,img:"poligonos"},{figop:"circulo",direccion:"panleft",x:127,y:12,img:"poligonos"}]
           }
         }
         for (let j = 0; j < this.objcontenido.puntos.length; j++) {
@@ -172,63 +184,17 @@ export default {
       this.llave_figura_correcta=true;
        if(valor===this.objcontenido.tipofigura){
          this.click_figura_correcta=true;
-         
-
+        
        }else{         
          this.click_figura_correcta=false;
           document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
          setTimeout(() => {
            document.getElementById("pantallaActividad").style.backgroundColor='white';
-           this.limpiar_trazo(valor)
-           this.responder()
+          //  this.limpiar_trazo(valor)
+           this.responder(valor);
          },500);
        }
        return this.click_figura_correcta
-     },
-    automatico(){
-    
-      this.inidibujarauto= setInterval(  
-        this.generar_ruta
-      ,10);
-    },
-    generar_ruta(){
-        
-      
-      if(this.autox != this.objcontenido.rutacorrecta[this.auto_pocicion+1].x){
-        
-        if(this.autox > this.objcontenido.rutacorrecta[this.auto_pocicion+1].x){
-        this.autox=this.autox-1
-      }else{this.autox=this.autox+1}
-      }
-      if(this.autoy != this.objcontenido.rutacorrecta[this.auto_pocicion+1].y){
-         
-         if(this.autoy > this.objcontenido.rutacorrecta[this.auto_pocicion+1].y){
-        this.autoy=this.autoy-1
-         }else{this.autoy=this.autoy+1}
-      }
-      
-      
-      if(this.autox==this.objcontenido.rutacorrecta[this.auto_pocicion+1].x & this.autoy==this.objcontenido.rutacorrecta[this.auto_pocicion+1].y){
-        // clearInterval(this.inidibujarauto);
-        console.log("asigne valor nuevo")
-        
-          this.auto_pocicion=this.auto_pocicion+1
-          this.autox=this.objcontenido.rutacorrecta[this.auto_pocicion].x
-          this.autoy=this.objcontenido.rutacorrecta[this.auto_pocicion].y
-        if(this.auto_pocicion===this.objcontenido.rutacorrecta.length-1){
-       
-          clearInterval(this.inidibujarauto);
-        }
-
-      }
-      
-      
-      console.log("me muevo")
-      
-     
-
-      // console.log(this.autox,)     
-
      },
      // valida la direccion en la que incio independientemente que caja sea
      direccion(direccion_capturada,figura){
@@ -244,13 +210,42 @@ export default {
         //  document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
        }
      },
+     validar_post_trazo(valor_cli){
+       if(valor_cli=="circulo"){
+         console.log("hola")
+       }
+      //  if(valor_cv=="triangulo"){}
+      //  if(valor_cv=="cuadrado"){}
+     },
      limpiar_trazo(value){
        console.log(value)
-       var canvas = this.canvas;
-       var ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.startX=this.caminoX;
-        this.startY=this.caminoY;
+       var canvas=null;
+       var canvasB=null;
+       var canvasC=null;
+       var ctx=null;
+      if(value=="cuadrado"){
+
+         canvas =this.$refs.canvascuadrado  
+         ctx=canvas.getContext("2d");
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+       }
+      if(value=="circulo"){
+
+         canvasC = this.$refs.canvascirculo  
+         ctx=canvasC.getContext("2d");
+         ctx.clearRect(0, 0, canvasC.width, canvasC.height); 
+       }
+      if(value=="triangulo"){
+
+          canvasB =this.$refs.canvastriangulo 
+          ctx=canvasB.getContext("2d");
+          ctx.clearRect(0, 0, canvasB.width, canvasB.height);
+          
+       }
+   
+        
+      // this.startX=this.caminoX;
+      //   this.startY=this.caminoY;
      },
      cargar_figura(){
         this.llenado_bar=0
@@ -259,66 +254,117 @@ export default {
       //  console.log(this.objcontenido);
         setTimeout(() => {
             document.getElementById('pantalla1').style.display='none'; 
+            this.$emit("tiemporespuestas",true); 
             this.mostrar=this.mostrarvista2;
-            console.log("aqui debo moostrar el tiempo")
-             this.iniciando();
+            //  this.iniciando();
             document.getElementById('pantalla2').style.display='block'; 
-            this.autox=this.objcontenido.rutacorrecta[0].x;
-            this.autoy=this.objcontenido.rutacorrecta[0].y;
+            document.getElementById('pinicio').style.display='block';
+            document.getElementById('pinicioB').style.display='block';
+            document.getElementById('pinicioC').style.display='block';
+           document.getElementById('iz').style.display='block';
+            document.getElementById('izB').style.display='block';
+             document.getElementById('izC').style.display='block';
             // this.$emit("mostrartime",true);
          },5000);  
      },
-     responder(){
-       this.parar_tiempo();
+    responder(valorcva){
+       this.$emit("tiemporespuestas",false); 
+      //  this.parar_tiempo();
 
        this.llave_finalizar=true;
 
        if(this.calificando==false){
+         var aciertos=0;
+         var orden=false;
+        
+         for (let j = 0; j < this.objcontenido.pociciones.length; j++) {
+           if(this.ordenvisitado.includes(this.objcontenido.pociciones[j].L)){
+             aciertos+=1;
+           }
+         }
+         if(this.ordenvisitado.length==this.objcontenido.pociciones.length){
+          for (let v = 0; v < this.ordenvisitado.length; v++) {
+           if(this.ordenvisitado[v]==this.objcontenido.pociciones[v].L){
+             orden=true;
+           }
+          }
+         }
+         var aciertostotales= aciertos== this.objcontenido.pociciones.length?true:false;
+         var patroninicial = this.objcontenido.pociciones[0].L== this.ordenvisitado[0]?true:false;
+         var patronfinal = this.objcontenido.pociciones[this.objcontenido.pociciones.length-1].L== this.ordenvisitado[this.ordenvisitado.length-1]?true:false;
+        
         //  this.parar_tiempo();
-         if(this.llave_direccion==true & this.click_figura_correcta==true & this.inicie_enelpunto==true){
+         if(this.click_figura_correcta==true & this.inicie_enelpunto==true & aciertostotales==true & patroninicial==true & patronfinal==true & orden==true){
            this.$emit("respuestasalumno",true);
          }else{
-           this.limpiar_trazo()
-           document.getElementById('indicador').style.display='block';                   
+           console.log(valorcva)
+           this.limpiar_trazo(valorcva)
+           document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
+           this.mostra_pasos()
+           
+          //  document.getElementById('indicador').style.display='block';                   
           //  this.automatico()
-           this.$emit("respuestasalumno",false); 
+          //  this.$emit("respuestasalumno",false); 
          }
          
        }
        this.calificando=true
      },
-     trazar(clientX,clientY,estoyen){ 
-      
-       this.canvas = document.getElementById(estoyen);      
-       this.context=this.canvas.getContext("2d");
-       var rect = this.canvas.getBoundingClientRect();
-       var x=clientX-rect.left;
-       var y=clientY-rect.top;
-       var startX;
-       var startY;
+    trazar(clientX,clientY,estoyen){ 
+       
+       var rect;
      
-       if(estoyen=="cuadrado"){
+      if(estoyen=="cuadrado"){
          startX=this.startXC
          startY=this.startYC
+         this.canvas =this.$refs.canvascuadrado  
+         this.context=this.canvas.getContext("2d");
+         rect= this.canvas.getBoundingClientRect();
        }
       if(estoyen=="circulo"){
          startX=this.startXR
          startY=this.startYR
+         this.canvasC =this.$refs.canvascirculo  
+         this.context=this.canvasC.getContext("2d");
+         rect= this.canvasC.getBoundingClientRect();
+        
        }
       if(estoyen=="triangulo"){
          startX=this.startXT
          startY=this.startYT
+          this.canvasB =this.$refs.canvastriangulo 
+          this.context=this.canvasB.getContext("2d");
+          rect= this.canvasB.getBoundingClientRect();
        }
+       var x=clientX-rect.left;
+       var y=clientY-rect.top;
+       var startX;
+       var startY;
       // console.log(parseInt(x),parseInt(y))
       if(this.llave_punto_inicial==false){
-        // console.log(parseInt(x),parseInt(y))
+        console.log(parseInt(x),parseInt(y),"entrepero")
         setTimeout(() => {
           this.mi_ini_llave1=true
          },3000);
-        if(x<(this.objcontenido.inicio[0].x+20) & y<(this.objcontenido.inicio[0].y+10))
+        if(x<(this.objcontenido.inicio[0].x+30) & y<(this.objcontenido.inicio[0].y+20))
         {
          this.inicie_enelpunto=true
          this.llave_punto_inicial=true
+         console.log("iniciaste bien")
+        var xcir= 0
+        var ycir= 0
+        var L=""
+        this.context.strokeStyle = "red";
+        this.context.fillStyle = "#6ab150";
+        for (let k = 0; k < this.objcontenido.pociciones.length; k++) {
+          
+          xcir=this.objcontenido.pociciones[k].xp;
+          ycir=this.objcontenido.pociciones[k].yp;
+          this.context.beginPath();
+          
+          this.context.arc(xcir, ycir, 10, 0, 9 * Math.PI);
+          //  this.context.stroke();
+        }
          console.log("vas bien")
         } 
         // if(x>(this.objcontenido.inicio[0].x+20) & y>(this.objcontenido.inicio[0].y)){
@@ -335,16 +381,17 @@ export default {
       
         if(x>=this.objcontenido.final[0].x-10 & x<=this.objcontenido.final[0].x+10 & y>=this.objcontenido.final[0].y-10 & y<=this.objcontenido.final[0].y){
           if(this.mi_ini_llave1==true){
-           this.responder() 
-
-            
-            // console.log(this.obtener)
+           this.responder(estoyen) 
           }
           
         }
+        for (var k = 0; k < this.objcontenido.pociciones.length; k++) {
+          xcir=this.objcontenido.pociciones[k].xp;
+          ycir=this.objcontenido.pociciones[k].yp;
+          L= this.objcontenido.pociciones[k].L;  
+          this.marcarPos(xcir,x,ycir,y,L)
+        }
 
-         console.log(x,y)   
-        
         this.context.beginPath();
         this.context.moveTo(startX,startY);
         this.context.lineTo(x,y);
@@ -371,6 +418,19 @@ export default {
       }
       
     },
+    marcarPos( px,x,py,y,indice) {
+      
+      if(x<px+20 & px-20<x & y<py+20 & py-20<y){
+         
+         if(this.ordenvisitado[this.ordenvisitado.length-1]!=indice){
+           this.ordenvisitado.push(indice)
+           console.log(indice)
+         }
+         
+      }
+       
+     
+    },
      mo: function(e) {
 
       if (this.captureToggle==true & this.llave_finalizar==false) {
@@ -380,12 +440,12 @@ export default {
       var figura_clikeada= this.llave_figura_correcta==false?this.figura_correcta(dondeestoy):true;
       
       if(figura_clikeada){
-      // console.log(e.additionalEvent)
       if(this.llave_direccion===false & this.evaluacion_unica===false){
-       if(e.additionalEvent=="panleft" | e.additionalEvent=="panright"){
-         this.direccion(e.additionalEvent,dondeestoy)
-        console.log(this.llave_direccion)
-       }
+        // console.log("estoy en direccion")
+      //  if(e.additionalEvent=="panleft" | e.additionalEvent=="panright"){
+      //    this.direccion(e.additionalEvent,dondeestoy)
+      //   console.log(this.llave_direccion)
+      //  }
       }
       this.trazar(x,y,dondeestoy)
       }
@@ -395,43 +455,137 @@ export default {
      }
     },
      captureOn: function() {
-      //  if(this.llave==1 & this.colision==false & this.llave_fin==0){
+        // if(this.llave){
       // console.log(this.captureToggle)  
       this.captureToggle = true
       this.isDrawing=true
-      // }
+      //  }
     },
      captureOff: function() {
       this.captureToggle = false
       // console.log(this.captureToggle)
        this.isDrawing=false;
     },
-    iniciando(){
-   this.valorparar = setInterval(
-   this.iniciar_tiempo
-        
-      ,10);
+    mostra_pasos(){
+       this.mostrar_pasos_T = setInterval(
+       this.rutacorrecta,1500);
     },
-    iniciar_tiempo(){
-    
-   this.milisegundos++;
-   this.llenado_bar=this.llenado_bar+this.tiempo_mm;
+     rutacorrecta(){
+       
+       if(this.objcontenido.tipofigura=="cuadrado"){
 
-  //  console.log(this.llenado_bar);
-    if(this.milisegundos==100){
-      this.milisegundos=0;
-      this.segundos++;
-      // console.log(this.segundos)
-     
-    }
-    if(this.segundos===91){
-              this.parar_tiempo()
-              this.$emit("tiempo",false);
-              document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
-    }         
-    },
-    parar_tiempo(){
-      clearInterval(this.valorparar);
+         this.canvas =this.$refs.canvascuadrado  
+         this.context=this.canvas.getContext("2d");
+       }
+      if(this.objcontenido.tipofigura=="circulo"){
+         this.canvasC = this.$refs.canvascirculo  
+         this.context=this.canvasC.getContext("2d");
+       }
+       if(this.objcontenido.tipofigura=="triangulo"){
+          this.canvasB =this.$refs.canvastriangulo 
+          this.context=this.canvasB.getContext("2d");     
+       }
+      if(this.objcontenido.tipofigura=="triangulo" | this.objcontenido.tipofigura=="cuadrado"){     
+      if(this.paso_mostrar<this.objcontenido.pociciones.length-1){ 
+        this.context.beginPath();
+        this.context.lineWidth=3;
+        this.context.strokeStyle ="#01E19E";
+        this.context.fillStyle = "#6ab150";
+        this.context.arc(this.objcontenido.pociciones[this.paso_mostrar].xp,
+        this.objcontenido.pociciones[this.paso_mostrar].yp, 8, 0, 9 * Math.PI);
+        this.context.font = "25px Courier New";  
+        this.context.strokeText(this.objcontenido.pociciones[this.paso_mostrar].L, this.objcontenido.pociciones[this.paso_mostrar].xp-6, this.objcontenido.pociciones[this.paso_mostrar].yp+5);
+        this.context.fill();
+        this.context.stroke();
+        if(this.paso_mostrar==0){
+        this.context.beginPath();
+        this.context.lineWidth=8;
+        this.context.strokeStyle = "#01E19E";
+        this.context.moveTo(this.objcontenido.inicio[0].x, this.objcontenido.inicio[0].y);
+				this.context.lineTo(this.objcontenido.pociciones[0].xp,this.objcontenido.pociciones[0].yp);
+        this.context.stroke();
+        }if(this.paso_mostrar>=1){
+        this.context.beginPath();
+        this.context.lineWidth=8;
+        this.context.strokeStyle = "#01E19E";
+        this.context.moveTo(this.objcontenido.pociciones[this.paso_mostrar-1].xp, this.objcontenido.pociciones[this.paso_mostrar-1].yp);
+				this.context.lineTo(this.objcontenido.pociciones[this.paso_mostrar].xp,this.objcontenido.pociciones[this.paso_mostrar].yp);
+        this.context.stroke();
+        }
+      }
+      else{
+        this.context.beginPath();
+        this.context.lineWidth=3;
+        this.context.strokeStyle ="#01E19E";
+        this.context.fillStyle = "#6ab150";
+        this.context.arc(this.objcontenido.inicio[0].x,
+        this.objcontenido.inicio[0].y, 8, 0, 9 * Math.PI);
+        this.context.fill();
+        this.context.stroke();
+        this.context.beginPath();
+        this.context.lineWidth=8;
+        this.context.strokeStyle = "#01E19E";
+        this.context.moveTo(this.objcontenido.pociciones[this.paso_mostrar-1].xp, this.objcontenido.pociciones[this.paso_mostrar-1].yp);
+				this.context.lineTo(this.objcontenido.final[0].x,this.objcontenido.final[0].y);
+        this.context.stroke();
+        clearInterval(this.mostrar_pasos_T)
+        this.$emit("respuestasalumno",false); 
+      }
+       }
+       if(this.objcontenido.tipofigura=="circulo"){
+         if(this.paso_mostrar==0){
+        let x = 130, y = 100,radio = 85;
+        this.context.beginPath();
+        this.context.lineWidth=8;
+        this.context.strokeStyle = "#01E19E";
+        this.context.arc(x, y, radio, 1.5, 4.7);
+        this.context.stroke();
+        this.context.beginPath();
+        this.context.lineWidth=3;
+        this.context.strokeStyle ="#01E19E";
+        this.context.fillStyle = "#6ab150";
+        this.context.arc(this.objcontenido.pociciones[this.paso_mostrar].xp,
+        this.objcontenido.pociciones[this.paso_mostrar].yp, 8, 0, 9 * Math.PI);
+        this.context.fill();
+        this.context.stroke();
+
+         }if(this.paso_mostrar==1){
+        var canvasC=null;
+        canvasC = this.$refs.canvascirculo  
+        this.context=canvasC.getContext("2d");
+        this.context.clearRect(0, 0, canvasC.width, canvasC.height); 
+        
+        let xb = 130, yb = 100,radiob = 85;
+        this.context.beginPath();
+        this.context.lineWidth=8;
+        this.context.strokeStyle = "#01E19E";
+        this.context.arc(xb,yb, radiob, 0, 9);
+        this.context.stroke();
+        this.context.beginPath();
+        this.context.lineWidth=3;
+        this.context.strokeStyle ="#01E19E";
+        this.context.fillStyle = "#6ab150";
+        this.context.arc(this.objcontenido.pociciones[this.paso_mostrar-1].xp,
+        this.objcontenido.pociciones[this.paso_mostrar-1].yp, 8, 0, 9 * Math.PI);
+        this.context.fill();
+        this.context.stroke();
+        this.context.beginPath();
+        this.context.lineWidth=3;
+        this.context.strokeStyle ="#01E19E";
+        this.context.fillStyle = "#6ab150";
+        this.context.arc(this.objcontenido.inicio[0].x,
+        this.objcontenido.inicio[0].y, 8, 0, 9 * Math.PI);
+        this.context.fill();
+        this.context.stroke();
+        
+        clearInterval(this.mostrar_pasos_T)
+        this.$emit("respuestasalumno",false); 
+         
+         }
+         
+       }
+      console.log(this.paso_mostrar);
+      this.paso_mostrar+=1;
     },
    }
 }
@@ -465,7 +619,7 @@ export default {
 }
 .pretrazos3_responder{
   // outline: 2px solid red;
- 
+  display: none;
   height: 100%;
   width: 100%;
 }

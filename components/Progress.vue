@@ -31,7 +31,33 @@ export default {
    methods:{
     
      // valida la direccion en la que incio independientemente que caja sea
-  
+      iniciando(){ 
+      
+   this.valorparar = setInterval(
+   this.iniciar_tiempo,10);
+    },
+    iniciar_tiempo(){
+    
+   this.milisegundos++;
+
+  //  console.log(this.llenado_bar);
+      if(this.milisegundos==100){
+      this.milisegundos=0;
+      this.segundos++;
+      // console.log(this.segundos)
+    }
+    if(this.segundos===91){
+        this.parar_tiempo()
+        // this.respuestasdadas(false)
+         document.getElementById("pantallaActividad").style.backgroundColor='#F6535DCC';
+
+    } 
+    this.llenado_bar=this.llenado_bar+this.tiempo_mm;        
+    },
+    parar_tiempo(){
+      
+      clearInterval(this.valorparar);
+    },
 
    }
 }
